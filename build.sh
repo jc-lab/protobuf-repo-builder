@@ -43,21 +43,24 @@ export PROTO_FILES_REL
 export PROTO_FILES_ABS
 
 function runCommands() {
-  item_type=$1
-  dir=$2
-  commands=$3
+  local item_type=$1
+  local dir=$2
+  local commands=$3
 
   cd "$dir"
 
-  cmds=$(echo $commands | jq -c '.[]')
+  local cmds=$(echo $commands | jq -c '.[]')
+  local cmdarr=()
 
   while IFS= read -r cmd; do
-    scmd=$(echo $cmd | jq -j '.')
-    echo "exec$ $scmd"
-    sh -c "exec $scmd" &
-    pid=$!
-    wait $pid
+    cmdarr+=("$cmd")
   done <<< "$cmds"
+
+  for (( i=0; i<${#cmdarr[@]}; i++ )); do
+    scmd=$(echo ${cmdarr[$i]} | jq -cj '.')
+    echo "exec$ $scmd"
+    ( exec $scmd )
+  done
 }
 
 function getJavaOutputVersion() {
