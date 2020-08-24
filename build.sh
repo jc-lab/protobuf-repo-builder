@@ -21,6 +21,9 @@ echo "version_file=$version_file"
 
 PROTO_FILES_REL=""
 PROTO_FILES_ABS=""
+
+PROTO_PACKAGE_NAME=$(cat ./.pbrepo/config.yaml | yq -c -j '."package-name"')
+
 for item in $(cat ./.pbrepo/config.yaml | yq -c '.filters[]'); do
   filter=$(echo $item | jq -j '.')
   temp_rel=$(find . -regex "$filter" -not -path "./.pbrepo/*")
@@ -41,6 +44,8 @@ export BUILD_GIT_ORIGIN_URL=$(git config --get remote.origin.url)
 
 export PROTO_FILES_REL
 export PROTO_FILES_ABS
+
+export PROTO_PACKAGE_NAME
 
 function runCommands() {
   local item_type=$1
