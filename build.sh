@@ -94,12 +94,6 @@ while IFS= read -r item; do
   item_abs_path=${pwd%%/}/$item_path
 
   if [[ "x$build_type" == "x" || "x$build_type" == "x$item_type" ]]; then
-    if [ "x$item_type" == "xjava" ]; then
-      proto_gen_dir=${item_path%%/}/$item_src_path
-      mkdir -p $proto_gen_dir
-      protoc --proto_path=. --java_out="$proto_gen_dir" $PROTO_FILES_REL
-    fi
-
     runCommands "$item_type" "$item_abs_path" "$item_commands"
 
     version=""
