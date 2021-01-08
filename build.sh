@@ -64,7 +64,7 @@ function runCommands() {
   for (( i=0; i<${#cmdarr[@]}; i++ )); do
     scmd=$(echo ${cmdarr[$i]} | jq -cj '.')
     echo "exec$ $scmd"
-    ( exec $scmd )
+    ( eval $scmd )
   done
 }
 
