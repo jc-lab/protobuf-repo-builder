@@ -32,6 +32,8 @@ pipeline:
     path: .pbrepo/java-project
     srcPath: src/main/java
     commands:
+      - 'mkdir -p ./src/main/protobuf/'
+      - 'cp $PROTO_FILES_ABS ./src/main/protobuf/'
       - 'chmod +x gradlew'
       - './gradlew build'
       - './gradlew artifactoryPublish'
