@@ -5,7 +5,7 @@ RUN microdnf --setopt=tsflags=nodocs install -y bash which findutils curl unzip 
 
 RUN pip3 install yq
 
-RUN adduser -h /tmp -s /bin/bash -u 1000 -D git-user
+RUN adduser -s /bin/bash -u 1000 -m git-user
 
 COPY ["build.sh", "install_protoc.sh", "/"]
 RUN chmod +x /*.sh && \
