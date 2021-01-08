@@ -23,9 +23,16 @@ fi
 proto_download_url="https://github.com/protocolbuffers/protobuf/releases/download/v${protoc_version}/protoc-${protoc_version}-linux-${protoc_plat}.zip"
 curl -L -o /tmp/protoc.zip ${proto_download_url}
 
-( cd / && unzip /tmp/protoc.zip )
+( cd /usr && unzip /tmp/protoc.zip )
 
 rm /tmp/protoc.zip
+
+chmod +x /usr/bin/protoc
+chmod +005 /usr/include
+chmod +005 /usr/include/google
+
+find /usr/include/google -type d | xargs chmod +555
+find /usr/include/google -type f | xargs chmod +444
 
 exit 0
 
